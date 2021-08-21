@@ -43,7 +43,32 @@ class WeatherController extends Controller
     {
         $content = BaseJson::decode($response->content, $asArray = true);
         Yii::$app->response->statusCode = $content['cod'];
+        if($content['cod'] == 200) {
+            return $this->preapreReponseArray($content);
+        }
         return $content;
+    }
+
+    protected function preapreReponseArray($content)
+    {
+        return [
+            'cod' => $content['cod'],
+            'name' => $content['name'],
+            'country' =>  $content['sys']['country'],
+            'timezone' =>  $content['timezone'],
+            'weather' => $content['weather'][0]['main'],
+            'description' => $content['weather'][0]['description'],
+            'coordinates' => $content['coord'],
+            'wind-speed' => $content['wind']['speed'],
+            'wind-deg' => $content['wind']['deg'],
+            'temp_min' =>  $content['main']['temp_min'],
+            'temp_max' =>  $content['main']['temp_max'],
+            'pressure' =>  $content['main']['pressure'],
+            'humidity' =>  $content['main']['humidity'],
+            'visibility' => $content['visibility'],
+            'sunrise' =>  $content['sys']['sunrise'],
+            'sunset' =>  $content['sys']['sunset'],
+        ];
     }
 
 }
