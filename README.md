@@ -4,7 +4,7 @@
         <li>Clone this respository</li> 
         <li>Setup Virtual Host for 'api' directory</li> 
         <li>composer install</li> 
-        <li>php init</li>
+        <li>RUN php init</li>
     </ul>
 </p>
 
