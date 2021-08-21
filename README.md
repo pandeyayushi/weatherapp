@@ -25,7 +25,7 @@
     {
         "success": true,
         "status": 200,
-            "data": {
+        "data": {
             "cod": 200,
             "name": "London",
             "country": "GB",
