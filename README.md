@@ -8,7 +8,7 @@
     </ul>
 </p>
 
-<p>Api Documentation:</br>
+<p>Api Documentation: You can call by city name, state code and country code. Please note that searching by states available only for the USA locations.</br>
     Endpoint: your-domain/weather/get-detail </br>
     Request Params: </br>
         q={city name}</br>
