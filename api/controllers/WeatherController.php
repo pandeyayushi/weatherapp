@@ -2,55 +2,48 @@
 
 namespace api\controllers;
 
+use common\services\ApiService;
 use Yii;
 use yii\base\Module;
-use yii\helpers\ArrayHelper;
+use yii\helpers\BaseJson;
 use yii\web\Controller;
-use yii\httpclient\Client;
 /**
  * WeatherController.
  */
 class WeatherController extends Controller
 {
     protected $baseUrl;
-    protected $baseParams;
-    protected $client;
+    protected $service;
 
-    function __construct($id, Module $module, array $config = [])
+    function __construct($id, Module $module, array $config = [], ApiService $service)
     {
         $this->baseUrl = Yii::$app->params['weatherApiUrl'];
-        $this->baseParams = [
-            "appid" => Yii::$app->params['weatherAppId'],
-        ];
-        $this->client = new Client();
+
+        $this->service = $service;
         parent::__construct($id, $module, $config);
     }
 
     public function actionGetDetail($q)
     {   
-        $response = $this->getResponse($q);
-        print_r($response);exit();
+        return $this->getResponse($q);
     }
 
 
     protected function getResponse($query)
     {
         $url = $this->baseUrl . "/data/2.5/weather";
-        $data = [
+        $params = [
             'q' => $query
         ];
-        $params = ArrayHelper::merge($this->baseParams, $data);
-        $response = $this->client->createRequest()
-        ->setMethod('GET')
-        ->setUrl($url)
-        ->setData($params)
-        ->send();
-        return $response;
+        $response = $this->service->send($url, $params, 'GET');
+        return $this->prepareResponse($response);
     }
 
     protected function prepareResponse($response)
     {
-
+        $content = BaseJson::decode($response->content, $asArray = true);
+        Yii::$app->response->statusCode = $content['cod'];
+        return $content;
     }
 
 }

@@ -36,49 +36,49 @@ return [
                     'controller' => 'weather',
                     'pluralize' => false,
                     'extraPatterns' => [
-                        'get-detail' => 'get-detail'
+                    'GET get-detail' => 'get-detail'
                     ],
                ],
             ],
         ],
-        // 'response' => [
-        //     'class' => \yii\web\Response::class,
-        //     'format' => yii\web\Response::FORMAT_JSON,
-        //     'charset' => 'UTF-8',
-        //     'on beforeSend' => function ($event) {
+        'response' => [
+            'class' => \yii\web\Response::class,
+            'format' => yii\web\Response::FORMAT_JSON,
+            'charset' => 'UTF-8',
+            'on beforeSend' => function ($event) {
                 
-        //         $response = $event->sender;
-        //         if ($response->format == 'html') {
-        //             return $response;
-        //         }
+                $response = $event->sender;
+                if ($response->format == 'html') {
+                    return $response;
+                }
 
-        //         $responseData = $response->data;
+                $responseData = $response->data;
 
-        //         if (is_string($responseData) && json_decode($responseData)) {
-        //             $responseData = json_decode($responseData, true);
-        //         }
+                if (is_string($responseData) && json_decode($responseData)) {
+                    $responseData = json_decode($responseData, true);
+                }
 
-        //         if ($response->statusCode >= 200 && $response->statusCode <= 299) {
-        //             $response->data = [
-        //                 'success' => true,
-        //                 'status' => $response->statusCode,
-        //                 'data' => $responseData,
-        //             ];
-        //         } else {
-        //             $response->data = [
-        //                 'success' => false,
-        //                 'status' => $response->statusCode,
-        //                 'data' => $responseData,
-        //             ];                    
-        //         }
-        //         return $response;
-        //     },
-        // ],
-        // 'request' => [
-        //     'parsers' => [
-        //         'application/json' => 'yii\web\JsonParser',
-        //     ]
-        // ],
+                if ($response->statusCode >= 200 && $response->statusCode <= 299) {
+                    $response->data = [
+                        'success' => true,
+                        'status' => $response->statusCode,
+                        'data' => $responseData,
+                    ];
+                } else {
+                    $response->data = [
+                        'success' => false,
+                        'status' => $response->statusCode,
+                        'data' => $responseData,
+                    ];                    
+                }
+                return $response;
+            },
+        ],
+        'request' => [
+            'parsers' => [
+                'application/json' => 'yii\web\JsonParser',
+            ]
+        ],
     ],
     'params' => $params,
 ];
