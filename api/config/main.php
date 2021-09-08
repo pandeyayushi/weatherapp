@@ -16,65 +16,75 @@ return [
     'modules' => [
     ],
     'components' => [
-        'user' => [
-            'identityClass' => 'common\models\User',
-            'enableAutoLogin' => true,
-            'enableSession' => false,
-            'loginUrl' => null,
+        'log' => [
+            'traceLevel' => YII_DEBUG ? 3 : 0,
+            'targets' => [
+                'file' => [
+                    'class' => 'yii\log\FileTarget',
+                    'levels' => ['error', 'warning'],
+                    'logFile' => '@api/runtime/logs/app.log',
+                ],
+                ]
         ],
-        'urlManager' => [
-            'enablePrettyUrl' => true,
-            'enableStrictParsing' => true,
-            'showScriptName' => false,
-            'rules' => [
-                [
-                'class' => 'yii\rest\UrlRule',
-                'controller' => 'weather',
-                'pluralize' => false,
-                'extraPatterns'=>[
-                    'GET weather-detail' => 'get-detail'
-                   ],
-               ],
-            ],
-        ],
-        'response' => [
-            'class' => \yii\web\Response::class,
-            'format' => yii\web\Response::FORMAT_JSON,
-            'charset' => 'UTF-8',
-            'on beforeSend' => function ($event) {
+        // 'user' => [
+        //     'identityClass' => 'common\models\User',
+        //     'enableAutoLogin' => true,
+        //     'enableSession' => false,
+        //     'loginUrl' => null,
+        // ],
+        // 'urlManager' => [
+        //     'enablePrettyUrl' => true,
+        //     'enableStrictParsing' => true,
+        //     'showScriptName' => false,
+        //     'rules' => [
+        //         [
+        //             'class' => 'yii\rest\UrlRule',
+        //             'controller' => 'weather',
+        //             'pluralize' => false,
+        //             'extraPatterns' => [
+        //                 'detail' => 'get-detail'
+        //             ],
+        //        ],
+        //     ],
+        // ],
+        // 'response' => [
+        //     'class' => \yii\web\Response::class,
+        //     'format' => yii\web\Response::FORMAT_JSON,
+        //     'charset' => 'UTF-8',
+        //     'on beforeSend' => function ($event) {
                 
-                $response = $event->sender;
-                if ($response->format == 'html') {
-                    return $response;
-                }
+        //         $response = $event->sender;
+        //         if ($response->format == 'html') {
+        //             return $response;
+        //         }
 
-                $responseData = $response->data;
+        //         $responseData = $response->data;
 
-                if (is_string($responseData) && json_decode($responseData)) {
-                    $responseData = json_decode($responseData, true);
-                }
+        //         if (is_string($responseData) && json_decode($responseData)) {
+        //             $responseData = json_decode($responseData, true);
+        //         }
 
-                if ($response->statusCode >= 200 && $response->statusCode <= 299) {
-                    $response->data = [
-                        'success' => true,
-                        'status' => $response->statusCode,
-                        'data' => $responseData,
-                    ];
-                } else {
-                    $response->data = [
-                        'success' => false,
-                        'status' => $response->statusCode,
-                        'data' => $responseData,
-                    ];                    
-                }
-                return $response;
-            },
-        ],
-        'request' => [
-            'parsers' => [
-                'application/json' => 'yii\web\JsonParser',
-            ]
-        ],
+        //         if ($response->statusCode >= 200 && $response->statusCode <= 299) {
+        //             $response->data = [
+        //                 'success' => true,
+        //                 'status' => $response->statusCode,
+        //                 'data' => $responseData,
+        //             ];
+        //         } else {
+        //             $response->data = [
+        //                 'success' => false,
+        //                 'status' => $response->statusCode,
+        //                 'data' => $responseData,
+        //             ];                    
+        //         }
+        //         return $response;
+        //     },
+        // ],
+        // 'request' => [
+        //     'parsers' => [
+        //         'application/json' => 'yii\web\JsonParser',
+        //     ]
+        // ],
     ],
     'params' => $params,
 ];
