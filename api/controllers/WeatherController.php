@@ -10,13 +10,15 @@ use yii\web\Controller;
  */
 class WeatherController extends Controller
 {
-    protected $appId;
-    protected $appUrl;
+    protected $baseUrl;
+    protected $baseParams;
 
     function __construct($id, Module $module, array $config = [])
     {
-        $this->appId = Yii::$app->params['weatherAppId'];
-        $this->appUrl = Yii::$app->params['weatherApiUrl'];
+        $this->baseUrl = Yii::$app->params['weatherApiUrl'];
+        $this->baseParams = [
+            "appid" => Yii::$app->params['weatherAppId'],
+        ];
         parent::__construct($id, $module, $config);
     }
 
