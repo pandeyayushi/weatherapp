@@ -26,27 +26,21 @@ return [
                 ],
                 ]
         ],
-        // 'user' => [
-        //     'identityClass' => 'common\models\User',
-        //     'enableAutoLogin' => true,
-        //     'enableSession' => false,
-        //     'loginUrl' => null,
-        // ],
-        // 'urlManager' => [
-        //     'enablePrettyUrl' => true,
-        //     'enableStrictParsing' => true,
-        //     'showScriptName' => false,
-        //     'rules' => [
-        //         [
-        //             'class' => 'yii\rest\UrlRule',
-        //             'controller' => 'weather',
-        //             'pluralize' => false,
-        //             'extraPatterns' => [
-        //                 'detail' => 'get-detail'
-        //             ],
-        //        ],
-        //     ],
-        // ],
+        'urlManager' => [
+            'enablePrettyUrl' => true,
+            'enableStrictParsing' => true,
+            'showScriptName' => false,
+            'rules' => [
+                [
+                    'class' => 'yii\rest\UrlRule',
+                    'controller' => 'weather',
+                    'pluralize' => false,
+                    'extraPatterns' => [
+                        'get-detail' => 'get-detail'
+                    ],
+               ],
+            ],
+        ],
         // 'response' => [
         //     'class' => \yii\web\Response::class,
         //     'format' => yii\web\Response::FORMAT_JSON,
